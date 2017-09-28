@@ -1,5 +1,6 @@
 package be.vdab.filters;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.*;
@@ -25,5 +26,9 @@ public class JPAFilter implements Filter {
 	@Override
 	public void destroy() {
 		entityManagerFactory.close();
+	}
+
+	public static EntityManager getEntityManager(){
+		return entityManagerFactory.createEntityManager();
 	}
 }
