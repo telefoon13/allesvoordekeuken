@@ -7,12 +7,12 @@ import javax.persistence.EntityManager;
 import java.util.Optional;
 
 public class ArtikelRepository {
-	public Optional<ArtikelsEntity> read(long id){
-		EntityManager entityManager = JPAFilter.getEntityManager();
-		try{
-			return Optional.ofNullable(entityManager.find(ArtikelsEntity.class, id));
-		} finally {
-			entityManager.close();
-		}
+
+	public Optional<ArtikelsEntity> read(long id, EntityManager entityManager){
+		return Optional.ofNullable(entityManager.find(ArtikelsEntity.class, id));
+	}
+
+	public void create(ArtikelsEntity artikel, EntityManager entityManager){
+		entityManager.persist(artikel);
 	}
 }

@@ -5,8 +5,7 @@
 <!doctype html>
 <html lang='nl'>
 <head>
-    <v:head title='${empty artikel ? "Docent zoeken" : artikel.naam}'/>
-
+    <v:head title='${empty artikel ? "Artikel zoeken" : artikel.naam}'/>
 </head>
 <body>
 <v:menu/>

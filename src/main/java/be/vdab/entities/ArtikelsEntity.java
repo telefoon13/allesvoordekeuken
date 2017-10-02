@@ -6,13 +6,27 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "artikels", schema = "allesvoordekeuken")
 public class ArtikelsEntity {
+
 	private long id;
 	private String naam;
 	private BigDecimal aankoopprijs;
 	private BigDecimal verkoopprijs;
 
+	public ArtikelsEntity(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
+		if (aankoopprijs.compareTo(verkoopprijs) > 0){
+			throw new IllegalArgumentException();
+		}
+		setNaam(naam);
+		setAankoopprijs(aankoopprijs);
+		setVerkoopprijs(verkoopprijs);
+	}
+
+	public ArtikelsEntity() {
+	}
+
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
@@ -28,6 +42,9 @@ public class ArtikelsEntity {
 	}
 
 	public void setNaam(String naam) {
+		if ( ! isNaamValid(naam)) {
+			throw new IllegalArgumentException();
+		}
 		this.naam = naam;
 	}
 
@@ -38,6 +55,9 @@ public class ArtikelsEntity {
 	}
 
 	public void setAankoopprijs(BigDecimal aankoopprijs) {
+		if (!isPrijsValid(aankoopprijs)){
+			throw new IllegalArgumentException();
+		}
 		this.aankoopprijs = aankoopprijs;
 	}
 
@@ -48,7 +68,20 @@ public class ArtikelsEntity {
 	}
 
 	public void setVerkoopprijs(BigDecimal verkoopprijs) {
+		if (!isPrijsValid(verkoopprijs)){
+			throw new IllegalArgumentException();
+		}
 		this.verkoopprijs = verkoopprijs;
+	}
+
+
+
+	public static boolean isNaamValid(String naam) {
+		return naam != null && ! naam.isEmpty();
+	}
+
+	public static boolean isPrijsValid(BigDecimal prijs) {
+		return prijs != null && prijs.compareTo(BigDecimal.valueOf(0.01)) >= 0;
 	}
 
 	@Override
