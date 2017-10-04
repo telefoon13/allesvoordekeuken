@@ -1,33 +1,31 @@
 package be.vdab.services;
 
 import be.vdab.entities.ArtikelsEntity;
-import be.vdab.filters.JPAFilter;
 import be.vdab.repositories.ArtikelRepository;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
-public class ArtikelService {
+public class ArtikelService extends AbstractService {
 
 	private final ArtikelRepository artikelRepository = new ArtikelRepository();
 
 	public Optional<ArtikelsEntity> read(long id){
-		EntityManager entityManager = JPAFilter.getEntityManager();
-		try {
-			return artikelRepository.read(id, entityManager);
-		} finally {
-			entityManager.close();
-		}
+		return artikelRepository.read(id);
 	}
 
 	public void create(ArtikelsEntity artikel){
-		EntityManager entityManager = JPAFilter.getEntityManager();
-		entityManager.getTransaction().begin();
+		beginTransaction();
 		try {
-			artikelRepository.create(artikel,entityManager);
-			entityManager.getTransaction().commit();
+			artikelRepository.create(artikel);
+			commit();
 		} catch (RuntimeException ex){
-			entityManager.getTransaction().rollback();
+			rollback();
+			throw ex;
 		}
+	}
+
+	public List<ArtikelsEntity> findByNaam(String naam, int vanafRij, int aantalRijen) {
+		return artikelRepository.findByNaam(naam,vanafRij,aantalRijen);
 	}
 }

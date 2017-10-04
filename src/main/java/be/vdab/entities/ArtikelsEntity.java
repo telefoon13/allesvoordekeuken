@@ -1,12 +1,14 @@
 package be.vdab.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "artikels", schema = "allesvoordekeuken")
-public class ArtikelsEntity {
+public class ArtikelsEntity implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private String naam;
 	private BigDecimal aankoopprijs;
