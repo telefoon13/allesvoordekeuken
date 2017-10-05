@@ -5,8 +5,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "artikels", schema = "allesvoordekeuken")
-public class ArtikelsEntity implements Serializable {
+@DiscriminatorColumn(name = "soort")
+public abstract class ArtikelsEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private long id;

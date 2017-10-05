@@ -1,6 +1,8 @@
 package be.vdab.servlets.artikels;
 
 import be.vdab.entities.ArtikelsEntity;
+import be.vdab.entities.FoodArtikels;
+import be.vdab.entities.NonFoodArtikels;
 import be.vdab.services.ArtikelService;
 
 import javax.servlet.ServletException;
@@ -27,6 +29,8 @@ public class ToevoegenServlet extends HttpServlet {
 		String naam = request.getParameter("naam");
 		BigDecimal aankoopprijs = null;
 		BigDecimal verkoopprijs = null;
+		String soort = request.getParameter("soort");
+		ArtikelsEntity artikel = null;
 
 		if (!ArtikelsEntity.isNaamValid(naam)){
 			fouten.put("naam", "Naam is verplicht");
@@ -53,8 +57,27 @@ public class ToevoegenServlet extends HttpServlet {
 		}
 
 
+
+		if (soort.equals("F")){
+			int houdbaarheid = Integer.parseInt(request.getParameter("houdbaarheid"));
+			if (houdbaarheid < 1 || houdbaarheid > 365){
+				fouten.put("houdbaarheid", "Houdbaarheid tussen 1 en 356 dagen.");
+			} else {
+				artikel = new FoodArtikels(naam,aankoopprijs,verkoopprijs, houdbaarheid);
+			}
+		} else if (soort.equals("NF")){
+			int garantie = Integer.parseInt(request.getParameter("garantie"));
+			if (garantie < 1 || garantie > 48){
+				fouten.put("garantie", "Garantie tussen 1 en 48 maand.");
+			} else {
+				artikel = new NonFoodArtikels(naam,aankoopprijs,verkoopprijs, garantie);
+			}
+		} else {
+			fouten.put("soort", "kies een soort");
+		}
+
+
 		if (fouten.isEmpty()) {
-			ArtikelsEntity artikel = new ArtikelsEntity(naam, aankoopprijs, verkoopprijs);
 			artikelService.create(artikel);
 			response.sendRedirect(response.encodeRedirectURL(String.format(REDIRECT_URL, request.getContextPath(), artikel.getId())));
 		} else {

@@ -5,6 +5,7 @@ import be.vdab.filters.JPAFilter;
 import be.vdab.services.ArtikelService;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,5 +26,9 @@ public class ArtikelRepository extends AbstractRepository {
 				.setFirstResult(vanafRij)
 				.setMaxResults(aantalRijen)
 				.getResultList();
+	}
+
+	public void prijsVerhoging(BigDecimal factor) {
+		getEntityManager().createNamedQuery("ArtikelsEntity.prijsVerhoging").setParameter("factor", factor).executeUpdate();
 	}
 }

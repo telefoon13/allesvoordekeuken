@@ -9,6 +9,7 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <non-jta-data-source>java:/comp/env/jdbc/allesvoordekeuken</non-jta-data-source>
     <class>be.vdab.entities.ArtikelsEntity</class>
+    <class>be.vdab.entities.FoodArtikels</class>
     <properties>
         <property name="hibernate.show_sql" value="true"/>
         <property name="hibernate.format.sql" value="true"/>
