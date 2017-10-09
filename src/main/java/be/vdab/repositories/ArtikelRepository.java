@@ -3,6 +3,7 @@ package be.vdab.repositories;
 import be.vdab.entities.ArtikelsEntity;
 import be.vdab.filters.JPAFilter;
 import be.vdab.services.ArtikelService;
+import be.vdab.valueobjects.Korting;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
@@ -30,5 +31,9 @@ public class ArtikelRepository extends AbstractRepository {
 
 	public void prijsVerhoging(BigDecimal factor) {
 		getEntityManager().createNamedQuery("ArtikelsEntity.prijsVerhoging").setParameter("factor", factor).executeUpdate();
+	}
+
+	public List<ArtikelsEntity> findAll(){
+		return getEntityManager().createNamedQuery("ArtikelsEntity.findAll", ArtikelsEntity.class).getResultList();
 	}
 }

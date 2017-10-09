@@ -1,10 +1,13 @@
 package be.vdab.entities;
 
+import be.vdab.valueobjects.Korting;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("NF")
@@ -13,8 +16,8 @@ public class NonFoodArtikels extends ArtikelsEntity{
 	private static final long serialVersionUID = 1L;
 	private int garantie;
 
-	public NonFoodArtikels(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int garantie) {
-		super(naam, aankoopprijs, verkoopprijs);
+	public NonFoodArtikels(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, Set<Korting> kortingen, int garantie) {
+		super(naam, aankoopprijs, verkoopprijs,kortingen);
 		setGarantie(garantie);
 	}
 

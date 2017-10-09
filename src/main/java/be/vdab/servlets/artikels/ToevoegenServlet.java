@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 @WebServlet(name = "ToevoegenServlet", urlPatterns = "/artikels/toevoegen.htm")
@@ -63,14 +64,14 @@ public class ToevoegenServlet extends HttpServlet {
 			if (houdbaarheid < 1 || houdbaarheid > 365){
 				fouten.put("houdbaarheid", "Houdbaarheid tussen 1 en 356 dagen.");
 			} else {
-				artikel = new FoodArtikels(naam,aankoopprijs,verkoopprijs, houdbaarheid);
+				artikel = new FoodArtikels(naam,aankoopprijs,verkoopprijs, new HashSet<>(), houdbaarheid);
 			}
 		} else if (soort.equals("NF")){
 			int garantie = Integer.parseInt(request.getParameter("garantie"));
 			if (garantie < 1 || garantie > 48){
 				fouten.put("garantie", "Garantie tussen 1 en 48 maand.");
 			} else {
-				artikel = new NonFoodArtikels(naam,aankoopprijs,verkoopprijs, garantie);
+				artikel = new NonFoodArtikels(naam,aankoopprijs,verkoopprijs, new HashSet<>(), garantie);
 			}
 		} else {
 			fouten.put("soort", "kies een soort");

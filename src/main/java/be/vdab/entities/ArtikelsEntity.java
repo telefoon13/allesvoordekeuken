@@ -1,8 +1,13 @@
 package be.vdab.entities;
 
+import be.vdab.valueobjects.Korting;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -15,14 +20,16 @@ public abstract class ArtikelsEntity implements Serializable {
 	private String naam;
 	private BigDecimal aankoopprijs;
 	private BigDecimal verkoopprijs;
+	private Set<Korting> kortingen;
 
-	public ArtikelsEntity(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
+	public ArtikelsEntity(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, Set<Korting> kortingen) {
 		if (aankoopprijs.compareTo(verkoopprijs) > 0){
 			throw new IllegalArgumentException();
 		}
 		setNaam(naam);
 		setAankoopprijs(aankoopprijs);
 		setVerkoopprijs(verkoopprijs);
+		kortingen = new HashSet<>();
 	}
 
 	public ArtikelsEntity() {
@@ -78,6 +85,24 @@ public abstract class ArtikelsEntity implements Serializable {
 		this.verkoopprijs = verkoopprijs;
 	}
 
+	@ElementCollection
+	@CollectionTable(name = "kortingen", joinColumns = @JoinColumn(name = "artikelid"))
+	@OrderBy("vanafAantal")
+	public Set<Korting> getKortingen() {
+		return kortingen;
+	}
+
+	public void setKortingen(Set<Korting> kortingen) {
+		this.kortingen = kortingen;
+	}
+
+	public void addKortingen(Korting korting){
+		kortingen.add(korting);
+	}
+
+	public void removeKortingen(Korting korting){
+		kortingen.remove(korting);
+	}
 
 
 	public static boolean isNaamValid(String naam) {
