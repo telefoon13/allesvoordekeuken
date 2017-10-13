@@ -21,8 +21,9 @@ public abstract class ArtikelsEntity implements Serializable {
 	private BigDecimal aankoopprijs;
 	private BigDecimal verkoopprijs;
 	private Set<Korting> kortingen;
+	private ArtikelgroepenEntity artikelgroep;
 
-	public ArtikelsEntity(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, Set<Korting> kortingen) {
+	public ArtikelsEntity(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
 		if (aankoopprijs.compareTo(verkoopprijs) > 0){
 			throw new IllegalArgumentException();
 		}
@@ -103,6 +104,17 @@ public abstract class ArtikelsEntity implements Serializable {
 	public void removeKortingen(Korting korting){
 		kortingen.remove(korting);
 	}
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "artikelgroepid")
+	public ArtikelgroepenEntity getArtikelgroep() {
+		return artikelgroep;
+	}
+
+	public void setArtikelgroep(ArtikelgroepenEntity artikelgroep) {
+		this.artikelgroep = artikelgroep;
+	}
+
 
 
 	public static boolean isNaamValid(String naam) {

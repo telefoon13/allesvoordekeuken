@@ -6,7 +6,7 @@
 			<ul>
 				<li><a href="<c:url value='/artikels/zoekopnummer.htm'/>">Zoeken op nummer</a></li>
 				<li><a href="<c:url value='/artikels/zoekopnaam.htm'/>">Zoeken op naam</a></li>
-				<li><a href="<c:url value='/artikels/perartikelgroep.htm'/>">Zoeken op naam</a></li>
+				<li><a href="<c:url value='/artikels/perartikelgroep.htm'/>">Zoeken op artikelgroep</a></li>
 			</ul></li>
 		<li><a href="#">Admin</a>
 			<ul>

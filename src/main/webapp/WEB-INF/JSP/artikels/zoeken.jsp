@@ -19,7 +19,9 @@
     Artikel niet gevonden
 </c:if>
 <c:if test='${not empty artikel}'>
-    ${artikel.naam} , Aankoopprijs: &euro; <fmt:formatNumber value='${artikel.aankoopprijs}'/> , Verkoopprijs: &euro; <fmt:formatNumber value='${artikel.verkoopprijs}'/>
+    <h2>${artikel.naam}</h2>
+    Aankoopprijs: &euro; <fmt:formatNumber value='${artikel.aankoopprijs}'/> --> Verkoopprijs: &euro; <fmt:formatNumber value='${artikel.verkoopprijs}'/><br>
+    Categorie : ${artikel.artikelgroep.naam}
 </c:if>
 </body>
 </html>

@@ -16,8 +16,8 @@ public class NonFoodArtikels extends ArtikelsEntity{
 	private static final long serialVersionUID = 1L;
 	private int garantie;
 
-	public NonFoodArtikels(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, Set<Korting> kortingen, int garantie) {
-		super(naam, aankoopprijs, verkoopprijs,kortingen);
+	public NonFoodArtikels(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int garantie) {
+		super(naam, aankoopprijs, verkoopprijs);
 		setGarantie(garantie);
 	}
 

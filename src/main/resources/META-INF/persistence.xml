@@ -11,6 +11,7 @@
     <class>be.vdab.entities.ArtikelsEntity</class>
     <class>be.vdab.entities.FoodArtikels</class>
     <class>be.vdab.valueobjects.Korting</class>
+    <class>be.vdab.entities.ArtikelgroepenEntity</class>
     <properties>
         <property name="hibernate.show_sql" value="true"/>
         <property name="hibernate.format.sql" value="true"/>

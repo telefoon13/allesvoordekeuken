@@ -3,6 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
     http://java.sun.com/xml/ns/persistence/orm_2_1.xsd">
+
     <named-query name='ArtikelsEntity.findByNaam'>
         <query>
             select a from ArtikelsEntity a
@@ -19,6 +20,13 @@
     <named-query name="ArtikelsEntity.findAll">
         <query>
             SELECT a FROM ArtikelsEntity a
+            ORDER BY a.naam
+        </query>
+    </named-query>
+
+    <named-query name="ArtikelgroepenEntity.findAll">
+        <query>
+            SELECT a FROM ArtikelgroepenEntity a
             ORDER BY a.naam
         </query>
     </named-query>

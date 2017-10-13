@@ -4,6 +4,7 @@ import be.vdab.entities.ArtikelsEntity;
 import be.vdab.entities.FoodArtikels;
 import be.vdab.entities.NonFoodArtikels;
 import be.vdab.services.ArtikelService;
+import be.vdab.services.ArtikelgroepService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +24,7 @@ public class ToevoegenServlet extends HttpServlet {
 	private static final String VIEW = "/WEB-INF/JSP/artikels/toevoegen.jsp";
 	private static final String REDIRECT_URL = "%s/artikels/zoekopnummer.htm?id=%d";
 	private final transient ArtikelService artikelService = new ArtikelService();
+	private final transient ArtikelgroepService artikelgroepService = new ArtikelgroepService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -32,6 +34,7 @@ public class ToevoegenServlet extends HttpServlet {
 		BigDecimal verkoopprijs = null;
 		String soort = request.getParameter("soort");
 		ArtikelsEntity artikel = null;
+		String artikelgroepId = request.getParameter("artikelgroepen");
 
 		if (!ArtikelsEntity.isNaamValid(naam)){
 			fouten.put("naam", "Naam is verplicht");
@@ -64,25 +67,34 @@ public class ToevoegenServlet extends HttpServlet {
 			if (houdbaarheid < 1 || houdbaarheid > 365){
 				fouten.put("houdbaarheid", "Houdbaarheid tussen 1 en 356 dagen.");
 			} else {
-				artikel = new FoodArtikels(naam,aankoopprijs,verkoopprijs, new HashSet<>(), houdbaarheid);
+				artikel = new FoodArtikels(naam,aankoopprijs,verkoopprijs, houdbaarheid);
 			}
 		} else if (soort.equals("NF")){
 			int garantie = Integer.parseInt(request.getParameter("garantie"));
 			if (garantie < 1 || garantie > 48){
 				fouten.put("garantie", "Garantie tussen 1 en 48 maand.");
 			} else {
-				artikel = new NonFoodArtikels(naam,aankoopprijs,verkoopprijs, new HashSet<>(), garantie);
+				artikel = new NonFoodArtikels(naam,aankoopprijs,verkoopprijs, garantie);
+
 			}
 		} else {
 			fouten.put("soort", "kies een soort");
 		}
 
 
+		if (artikelgroepId == null){
+				fouten.put("artikelgroepen", "artikelgroep kiezen aub.");
+		}
+
+
 		if (fouten.isEmpty()) {
+			artikelgroepService.read(Long.parseLong(artikelgroepId)).ifPresent(artikel::setArtikelgroep);
 			artikelService.create(artikel);
 			response.sendRedirect(response.encodeRedirectURL(String.format(REDIRECT_URL, request.getContextPath(), artikel.getId())));
+
 		} else {
 			request.setAttribute("fouten", fouten);
+			request.setAttribute("artikelgroepen",artikelgroepService.findAll());
 			request.getRequestDispatcher(VIEW).forward(request, response);
 		}
 
@@ -90,6 +102,7 @@ public class ToevoegenServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		request.setAttribute("artikelgroepen",artikelgroepService.findAll());
 		request.getRequestDispatcher(VIEW).forward(request, response);
 
 	}

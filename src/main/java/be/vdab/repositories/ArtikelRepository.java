@@ -1,11 +1,7 @@
 package be.vdab.repositories;
 
 import be.vdab.entities.ArtikelsEntity;
-import be.vdab.filters.JPAFilter;
-import be.vdab.services.ArtikelService;
-import be.vdab.valueobjects.Korting;
 
-import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

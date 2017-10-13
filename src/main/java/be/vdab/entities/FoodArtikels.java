@@ -16,8 +16,8 @@ public class FoodArtikels extends ArtikelsEntity {
 	private static final long serialVersionUID = 1L;
 	private int houdbaarheid;
 
-	public FoodArtikels(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, Set<Korting> kortingen, int houdbaarheid) {
-		super(naam, aankoopprijs, verkoopprijs,kortingen);
+	public FoodArtikels(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int houdbaarheid) {
+		super(naam, aankoopprijs, verkoopprijs);
 		setHoudbaarheid(houdbaarheid);
 	}
 
